@@ -1,0 +1,21 @@
+---
+
+- name: use template to upload file
+  template: src="{{item.src}}" dest="{{item.dest}}" owner={{ user }} group={{ group }}
+  with_items:
+    - {'src': 'green-httpd' , 'dest':'/etc/init.d/{{service_name}}'} 
+
+   
+- name: make sure service script excutable
+  command: chmod a+x "/etc/init.d/{{ service_name }}"
+
+
+- name: add service 
+  command: chkconfig --add {{ service_name }}  
+
+ 
+- name: service on
+  service: name="{{ service_name }}" enabled=yes
+
+       
+

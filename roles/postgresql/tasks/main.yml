@@ -1,0 +1,28 @@
+---
+
+- name: install postgresql-server
+  yum:
+    name: 'postgresql-server'
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- name: install postgresql-contrib
+  yum:
+    name: 'postgresql-contrib'
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- name: init db
+  shell: postgresql-setup initdb
+  notify: 
+    - start postgresql
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- name: create postgresql superuser
+  shell: su - postgres -c "createuser -s {{ user }}"

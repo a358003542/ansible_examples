@@ -1,0 +1,17 @@
+---
+
+- name: just make sure the system python exist
+  yum: 
+    name: python36
+    state: present
+
+- name: just make sure the system python-devel exist
+  yum: 
+    name: python36-devel
+    state: present
+
+- name: create python link file to python36
+  shell: ln -s -f /usr/bin/python36 /usr/bin/python3
+
+
+

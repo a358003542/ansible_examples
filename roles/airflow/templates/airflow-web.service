@@ -1,0 +1,15 @@
+[Unit]
+Description=Airflow webserver daemon
+After=network.target postgresql.service mysql.service redis.service rabbitmq-server.service
+Wants=postgresql.service mysql.service redis.service rabbitmq-server.service
+
+[Service]
+User=root
+WorkingDirectory={{ project_root }}/autowriting-workflow
+Environment="AIRFLOW_HOME={{ project_root }}/autowriting-workflow"
+ExecStart=/usr/bin/pipenv run airflow webserver
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

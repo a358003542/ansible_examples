@@ -1,0 +1,42 @@
+---
+
+
+- name: ansible debug info
+  hosts: all
+  become: True
+  
+  roles:
+    - {role: debug, tags: ['debug'], when: debug }
+  
+    
+- name: yum update  install epel and install Development tools
+  hosts: all
+  become: True
+
+  roles:
+    - {role: prepare, tags: ['prepare']}
+
+
+- name: install user and group
+  hosts: all
+  become: True
+
+  roles:
+    - {role: prepare_user, tags: ['prepare_user']}
+
+    
+- name: install python3
+  hosts: all
+  
+  roles:
+    - {role: python3, tags: ['python3']}
+
+
+
+
+
+# - name: install apache
+#   hosts: all
+  
+#   roles:
+#     - {role: apache, tags: ['apache']}

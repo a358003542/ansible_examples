@@ -1,0 +1,40 @@
+<IfModule !wsgi_module>
+    LoadModule wsgi_module modules/mod_wsgi.so
+</IfModule>
+
+
+<VirtualHost *:{{httpd_port}}>
+    ServerName {{server_name}}
+
+    # use wsgi deamon so you can server multi django wsig project
+    WSGIDaemonProcess {{ daemon_name }} processes=2 python-path={{user_root}}/venv/{{django_project_name}} python-home={{user_root}}/venv threads=10
+    WSGIProcessGroup {{ daemon_name }}
+
+    WSGIScriptAlias / {{user_root}}/venv/{{django_project_name}}/{{django_project_name}}/wsgi.py process-group={{ daemon_name }}
+
+    <Directory {{user_root}}/venv/{{django_project_name}} >
+        <IfVersion >= 2.4>
+            Require all granted
+        </IfVersion>
+        <IfVersion < 2.4>
+            Order deny,allow
+            Allow from all
+        </IfVersion>
+    </Directory>
+
+	Alias "/static" "{{ user_root}}/venv/{{django_project_name}}/static"
+    # gzip压缩优化
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+    SetOutputFilter DEFLATE
+
+    <Directory  {{user_root}}/venv/{{django_project_name}}/static >
+        <IfVersion >= 2.4>
+            Require all granted
+        </IfVersion>
+        <IfVersion < 2.4>
+            Order deny,allow
+            Allow from all
+        </IfVersion>
+    </Directory>
+
+</VirtualHost>

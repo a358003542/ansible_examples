@@ -1,0 +1,24 @@
+---
+
+
+- name: copy repo file 
+  copy: src=mongodb-org-3.6.repo dest=/etc/yum.repos.d/mongodb-org-3.6.repo
+
+- name: install epel-release
+  yum:
+    name: 'epel-release'
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: install mongodb-org
+  yum:
+    name: mongodb-org
+    state: present
+  when:
+    - ansible_distribution == "CentOS"  
+  notify: 
+    - start mongodb
+
+
+# config file /etc/mongod.conf

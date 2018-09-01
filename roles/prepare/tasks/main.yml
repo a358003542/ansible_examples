@@ -1,0 +1,26 @@
+---
+
+
+- name: yum update
+  yum:
+    name: '*'
+    state: latest
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: install epel-release
+  yum:
+    name: 'epel-release'
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+- name: install the 'Development tools' package group
+  yum:
+    name: "@Development tools"
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+- include: ./prepare_user.yml
+

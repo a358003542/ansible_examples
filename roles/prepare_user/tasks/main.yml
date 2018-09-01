@@ -1,0 +1,14 @@
+---
+
+- name: add group 
+  group: 
+    name: "{{ group }}"
+    state: present
+      
+- name: add user 
+  user: 
+    name: "{{ user }}"
+    group: "{{ group }}"
+    home: "{{ user_root }}"
+    createhome: yes
+    state: present

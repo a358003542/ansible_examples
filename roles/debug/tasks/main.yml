@@ -1,0 +1,34 @@
+---
+
+- name: debug for ansible_distribution
+  debug: msg="{{ ansible_distribution }}"
+  
+- name: debug for ansible_distribution_version
+  debug: msg="{{ ansible_distribution_version }}"
+
+- name: debug for ansible_distribution_major_version
+  debug: msg="{{ ansible_distribution_major_version }}"
+    
+
+- name: debug for python_version
+  debug: msg="{{ python_version }}"
+
+- name: test if ansible connection locally
+  debug: msg="yes i am in local connection"
+  when: ansible_connection == "local"
+
+- name: test os family
+  debug: msg="i am in Debian system"
+  when: ansible_os_family == "Debian"
+
+- name: test os family
+  debug: msg="i am in Centos 6"
+  when: 
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "6"
+
+- name: test os family
+  debug: msg="i am in Centos 7"
+  when: 
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"

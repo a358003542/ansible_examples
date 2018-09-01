@@ -1,0 +1,27 @@
+
+<VirtualHost *:{{httpd_port}}>
+    ServerName {{server_name}}
+    ServerAlias
+
+
+    # gzip压缩优化
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+    SetOutputFilter DEFLATE
+
+    DocumentRoot {{ your_static_project_path }}
+    DirectoryIndex index.html
+
+
+    <Directory {{ your_static_project_path }} >
+        <IfVersion >= 2.4>
+            Require all granted
+        </IfVersion>
+        <IfVersion < 2.4>
+            Order deny,allow
+            Allow from all
+        </IfVersion>
+    </Directory>
+
+
+
+</VirtualHost>

@@ -1,0 +1,19 @@
+---
+
+
+- name: copy repo file
+  copy: src=elasticsearch.repo dest=/etc/yum.repos.d/elasticsearch.repo
+
+
+- name: install elasticsearch
+  yum:
+    name: elasticsearch
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- name: start all the service
+  systemd: state=started name={{ item }}
+  with_items:
+    - elasticsearch

@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# winstorehttpd        Startup script for the Apache HTTP Server
+#
+# chkconfig: - 85 15
+# description: The Apache HTTP Server is an efficient and extensible  \
+#          server implementing the current HTTP standards.
+###
+
+
+# Path to the apachectl script, server binary, and short-form for messages.
+PROG_BIN={{user_root}}/apache/bin/apachectl
+PIDFILE={{user_root}}/apache/logs/httpd.pid
+OPTIONS="-f {{user_root}}/apache/conf/httpd.conf"
+RETVAL=0
+
+# The semantics of these two functions differ from the way apachectl does
+# things -- attempting to start while running is a failure, and shutdown
+# when not running is also a failure.  So we just do it the way init scripts
+# are expected to behave here.
+start() {
+    echo -n $"Starting $0: "
+    $PROG_BIN $OPTIONS
+    RETVAL=$?
+    return $RETVAL
+}
+
+# When stopping httpd, a delay (of default 10 second) is required
+# before SIGKILLing the httpd parent; this gives enough time for the
+# httpd parent to SIGKILL any errant children.
+stop() {
+    echo -n $"Stopping $0: "
+    $PROG_BIN -k stop
+    RETVAL=$?
+    return $RETVAL
+}
+reload() {
+    echo -n $"Reloading $0: "
+    $PROG_BIN -k graceful
+    RETVAL=$?
+    return $RETVAL
+}
+
+
+status(){
+    if [ -e $PIDFILE ]; then
+        echo $0 is running, pid=`cat $PIDFILE`
+    else
+        echo $0 is stopped
+        RETVAL=1   # 方便后续程序判断
+        return $RETVAL  
+    fi
+    RETVAL=0
+    return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    graceful|help|configtest|graceful-stop|restart)
+        echo "$PROG_BIN $@ ..."
+        $PROG_BIN $@
+        RETVAL=$?
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|reload|graceful|help|configtest|status}"
+        RETVAL=2
+esac
+
+exit $RETVAL

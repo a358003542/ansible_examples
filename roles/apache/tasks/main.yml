@@ -1,0 +1,83 @@
+---
+
+
+- name: pcre-devel  must installed for httpd build
+  yum:
+    name: pcre-devel
+    state: present
+
+- name: expat-devel  must installed for apt-util build
+  yum:
+    name: expat-devel
+    state: present
+
+
+- name: make sure filefolder exists
+  file: path="{{item}}" state=directory
+  with_items:
+    - /root/apr
+    - /root/apr-util
+    - /root/httpd
+    - /root/mod_wsgi
+    - /root/mod_php
+
+- name: install apr
+  shell: "tar -zxvf resource/apr-1.6.2.tar.gz -C /root/apr --strip-components=1 && 
+          cd /root/apr  && 
+          ./configure  --prefix={{user_root}}   &&
+          make && make install"
+
+- name: install apr-util
+#  become: True
+  shell: "tar -zxvf resource/apr-util-1.6.0.tar.gz -C /root/apr-util --strip-components=1 && 
+          cd /root/apr-util  && 
+          ./configure --with-apr={{user_root}}/bin/apr-1-config  --prefix={{user_root}} &&
+          make && make install"
+
+
+- name: install httpd
+  shell: "tar -jxvf resource/httpd-2.4.27.tar.bz2 -C /root/httpd --strip-components=1 && 
+          cd /root/httpd  && 
+          ./configure  --prefix={{user_root}}/apache --enable-mods-shared=all  --with-apr={{user_root}}/bin/apr-1-config --with-apr-util={{user_root}}/bin/apu-1-config  &&
+          make && make install"
+
+- name: install mod_wsgi
+  shell: "tar -zxvf resource/mod_wsgi-4.5.18.tar.gz -C /root/mod_wsgi --strip-components=1 && 
+          cd /root/mod_wsgi  && 
+          ./configure  --with-apxs={{user_root}}/apache/bin/apxs --with-python={{user_root}}/bin/python &&
+          make && make install"
+
+
+- name: make sure libxml2 exist for php install
+  yum: 
+    name: libxml2
+    state: present
+
+- name: make sure libxml2-devel exist for php install
+  yum: 
+    name: libxml2-devel
+    state: present
+
+  
+- name: install mod_php
+  shell: "tar -xvf resource/php-5.6.32.tar.gz -C /root/mod_php --strip-components=1 && 
+          cd /root/mod_php  && 
+          ./configure  --with-apxs2={{user_root}}/apache/bin/apxs --prefix={{user_root}}  &&
+          make && make install &&
+          \cp php.ini-production {{user_root}}/lib/php.ini"
+
+
+- name: last remove the folder /root/setuptools /root/pip
+  file: path="{{item}}" state=absent
+  with_items:
+    - /root/apr
+    - /root/apr-util
+    - /root/httpd
+    - /root/mod_wsgi
+    - /root/mod_php
+
+- include: ./service.yml
+
+
+- include: ./config.yml
+
