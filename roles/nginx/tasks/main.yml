@@ -4,9 +4,16 @@
   yum:
     name: nginx
     state: present
+  notify: 
+    - start postgresql
   when:
     - ansible_distribution == "CentOS"
 
+- name: make sure filefolder exists
+  file: path="{{item}}" state=directory
+  with_items:
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
 
 - name: install nginx conf
   template: src="{{item.src}}" dest="{{item.dest}}"
