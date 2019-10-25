@@ -11,7 +11,7 @@
     state: present
 
 - name: create python link file to python36
-  shell: ln -s -f /usr/bin/python36 /usr/bin/python3
+  shell: ln -s -f /usr/bin/python3.6 /usr/bin/python3
 
 
 
