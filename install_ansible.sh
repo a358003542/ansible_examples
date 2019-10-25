@@ -57,7 +57,7 @@ elif [[ "RedHatEnterpriseServer" =~ $os_VENDOR || "CentOS" =~ $os_VENDOR ]]; the
     yum install -y ansible
   else
     echo "*** Installing EPEL... ***"
-    yum install epel-release
+    yum install -y epel-release
     echo "*** Installing Ansible from EPEL... ***"
     yum install -y ansible
   fi
