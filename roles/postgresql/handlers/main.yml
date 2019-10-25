@@ -1,4 +1,4 @@
 ---
 
 - name: start postgresql
-  service: name=postgresql state=started
+  service: name=postgresql state=restarted
