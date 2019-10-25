@@ -35,8 +35,8 @@
 
 
 
-# - name: install apache
-#   hosts: all
+- name: install postgresql
+  hosts: all
   
-#   roles:
-#     - {role: apache, tags: ['apache']}
+  roles:
+    - {role: postgresql, tags: ['postgresql']}

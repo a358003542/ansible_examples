@@ -4,13 +4,9 @@
 debug: true 
 
 
-user: green
-group: green
-
-
-user_root: /home/wanze
-project_root: /home/wanze/project
-
+user: cdwanze
+group: cdwanze
+user_home: /home/cdwanze
 
 
 

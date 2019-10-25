@@ -9,6 +9,6 @@
   user: 
     name: "{{ user }}"
     group: "{{ group }}"
-    home: "{{ user_root }}"
+    home: "{{ user_home }}"
     createhome: yes
     state: present

@@ -24,28 +24,42 @@ ansible-playbook -i hosts site.yml --tags=task_name
 ### debug 
 some debug info
 
+只是一个打印debug信息的任务 并不会对系统进行任何修改 可以先运行下确认ansible工作正常
+
 ### prepare 
 yum update  install epel and install Development tools
 
+升级和安装centos Development tools 推荐
 
 ### prepare_user
 install user and group
 
+新建某个用户和群组
+
+你可以在group_vars 的all 文件里面定义 user group user_home 
+
+
+重复刷是没问题的
+
 ### python3
 install python36 on centos
 
+在centos上安装 python36 并新建 /usr/bin/python3 符号链接方便你直接输入 python3 调用
+
+
+### postgresql
+安装postgresql数据库 
+
+你设置的 user 参数 将会当做用户名创建一个postgresql的新用户
+
+
 
 ### airflow
-安装apache-airflow，主要是配置好airflow webserver和 airflow scheduler 这两个服务。
+安装apache-airflow，主要是配置好airflow webserver和 airflow scheduler 这两个服务。 可做参考
 
 
 ### elasticsearch
 安装elasticsearch
-
-
-### postgresql
-show how to install postgresql
-
 
 ### mongodb
 show how to install mongodb
@@ -61,13 +75,4 @@ sudo ln -s /etc/nginx/sites-available/cdwanze.work /etc/nginx/sites-enabled/cdwa
 ### apache
 apache从零开始编译到django相关配置等，可做参考，默认不开启。
 
-## group_var 详解
 
-- debug : 开启debug信息
-
-- user: 用户
-- group： 用户群
-
-
-- user_root : 用户的家目录
-- project_root: 项目的根目录，默认是用户的家目录下的project文件夹

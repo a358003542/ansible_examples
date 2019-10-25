@@ -22,5 +22,3 @@
   when:
     - ansible_distribution == "CentOS"
 
-- include: ./prepare_user.yml
-
