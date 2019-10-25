@@ -1,0 +1,19 @@
+---
+
+- name: install nginx
+  yum:
+    name: nginx
+    state: present
+  when:
+    - ansible_distribution == "CentOS"
+
+
+- name: install nginx conf
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {'src': 'nginx.conf' , 'dest':'/etc/nginx/nginx.conf'}
+
+- name: install myapp template
+  template: src="{{item.src}}" dest="{{item.dest}}"
+  with_items:
+    - {'src': 'myapp.conf' , 'dest':'/etc/nginx/sites-available/myapp.conf'}

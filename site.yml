@@ -39,3 +39,12 @@
   
   roles:
     - {role: postgresql, tags: ['postgresql']}
+
+
+
+- name: install nginx
+  hosts: all
+  become: True
+  
+  roles:
+    - {role: nginx, tags: ['nginx']}

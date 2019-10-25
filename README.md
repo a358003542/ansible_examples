@@ -52,6 +52,10 @@ install python36 on centos
 
 你设置的 user 参数 将会当做用户名创建一个postgresql的新用户
 
+### nginx
+安装nginx 并复制网站配置过去
+
+
 
 
 ### airflow
@@ -64,13 +68,6 @@ install python36 on centos
 ### mongodb
 show how to install mongodb
 
-### nginx
-nginx的配置不是一两句话的事，一个初步的配置过程就是在 /etc/nginx 下
-- 新建 sites-available 和 sites-enabled 这两个文件夹，然后在 sites-available 下面新建 you_web.conf 文件，本项目给出了一个模板，更多信息请参看 [这篇文章的介绍](https://docs.cdwanze.work/articles/nginx-web-server.html)
-
-```
-sudo ln -s /etc/nginx/sites-available/cdwanze.work /etc/nginx/sites-enabled/cdwanze.work
-```
 
 ### apache
 apache从零开始编译到django相关配置等，可做参考，默认不开启。
