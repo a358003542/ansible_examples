@@ -14,7 +14,7 @@
     state: present
   when:
     - ansible_distribution == "CentOS"
-
+ 
 
 - name: init db
   shell: postgresql-setup initdb
@@ -23,6 +23,3 @@
   when:
     - ansible_distribution == "CentOS"
 
-
-- name: create postgresql superuser
-  shell: su - postgres -c "createuser -s {{ user }}"
