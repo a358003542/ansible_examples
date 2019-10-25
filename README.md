@@ -3,7 +3,7 @@
 ## intro
 every rule focus on some common task, Although there are docker or some other solution, but in some time , install software in linux system just make sense and have some convience. here are some ansible code , just remeber the linux operation.
 
-
+写了很多碎片小任务，既可以作为脚本来刷，也可以参考学习。
 
 ## 安装基本步骤
 1. 安装ansible，你可以执行 `install_ansible.sh` 这个脚本。

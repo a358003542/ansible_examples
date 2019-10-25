@@ -27,16 +27,15 @@
     
 - name: install python3
   hosts: all
+  become: True
   
   roles:
     - {role: python3, tags: ['python3']}
 
 
-
-
-
 - name: install postgresql
   hosts: all
+  become: True
   
   roles:
     - {role: postgresql, tags: ['postgresql']}
